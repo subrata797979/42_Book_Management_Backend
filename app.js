@@ -1,29 +1,22 @@
+require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
-
-const dbUrl = 'mongodb://localhost/DashboardDb'
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 
-mongoose.connect(dbUrl)
-const con = mongoose.connection
-
-con.on('open', () => {
-    console.log('Connected To Database!')
-})
+mongoose.connect(process.env.DATABASE_URL)
+const db = mongoose.connection
+db.on('error', (error) => console.error(error))
+db.once('open', () => console.log('Connected To Database!'))
 
 // middleware
 app.use(express.json())
 
-// home route
-app.use('/', (req, res) => {
-    res.send('home route hit!')
-})
-
 // books route
 const bookRouter = require('./routes/books')
-app.use('/books',bookRouter)
+app.use('/api/books', bookRouter)
 
-app.listen(9000, () => {
-    console.log('Server Started!')
-})
+app.listen(9000, () => console.log('Server Started in port 9000!'))
