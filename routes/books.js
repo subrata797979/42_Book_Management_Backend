@@ -18,10 +18,18 @@ router.get('/:id', (req, res) => {
 })
 
 // creating one
+router.get('/:id', (req, res) => {
+    res.send('Creating One')
+})
 
 // updating one
+router.put('/:id', (req, res) => {
+    res.send('Updating One')
+})
 
 // deleting one
-
+router.delete('/:id', (req, res) => {
+    res.send('Deleting One')
+})
 
 module.exports = router
