@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
 })
 
 // creating one
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
     const book = new Book({
         _id: req.body._id,
         title: req.body.title,
