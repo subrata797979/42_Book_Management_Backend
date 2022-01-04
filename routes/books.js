@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const Books = require('../models/book')
+const Book = require('../models/book')
 
 // getting all 
 router.get('/', async (req, res) => {
     try {
-        const books = await Books.find()
+        const books = await Book.find()
         res.json(books)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -18,12 +18,31 @@ router.get('/:id', (req, res) => {
 })
 
 // creating one
-router.get('/:id', (req, res) => {
-    res.send('Creating One')
+router.post('/', async (req, res) => {
+    const book = new Book({
+        _id: req.body._id,
+        title: req.body.title,
+        isbn: req.body.isbn,
+        pageCount: req.body.pageCount,
+        publishedDate: req.body.publishedDate,
+        thumbnailUrl: req.body.thumbnailUrl,
+        shortDescription: req.body.shortDescription,
+        longDescription: req.body.longDescription,
+        status: req.body.status,
+        authors: req.body.authors,
+        categories: req.body.categories
+    })
+
+    try {
+        const b1 = await book.save()
+        res.json(b1)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 
 // updating one
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     res.send('Updating One')
 })
 

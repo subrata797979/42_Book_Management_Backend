@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const bookSchema = new mongoose.Schema({
     _id: {
-        type: Number,
-        require: false
+        type: String,
+        required: true
     },
     title: {
         type: String,
