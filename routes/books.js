@@ -13,8 +13,10 @@ router.get('/', async (req, res) => {
 })
 
 // getting one
-router.get('/:id', (req, res) => {
-    res.send('Getting One')
+router.get('/book/:id', async (req, res) => {
+    const id = req.params.id;
+    const book = await Book.findOne({isbn: id})
+    res.json(book)
 })
 
 // creating one
@@ -42,13 +44,18 @@ router.post('/create', async (req, res) => {
 })
 
 // updating one
-router.put('/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
     res.send('Updating One')
 })
 
 // deleting one
-router.delete('/:id', (req, res) => {
-    res.send('Deleting One')
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const books = await Book.findByIdAndDelete(req.body._id)
+        res.json(books)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 
 module.exports = router
